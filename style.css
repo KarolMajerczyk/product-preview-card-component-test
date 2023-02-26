@@ -287,4 +287,7 @@ body {
     3. Następnie publikuj branch wybierając nazwę oraz czy ma on być public czy private.
 
     https://www.kevinpowell.co/resources/
+
+    4. Netlify -> add new site -> import an existing project
+    -> Github -> choose repository -> choose branch name -> deploy site
 */

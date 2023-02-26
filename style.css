@@ -1,0 +1,288 @@
+:root {
+  --clr-primary-400: hsl(158, 36%, 37%);
+  --clr-primary-500: hsl(158, 36%, 20%);
+  --clr-secondary-200: hsl(30, 38%, 92%);
+
+  --clr-neutral-900: hsl(212, 21%, 14%);
+  --clr-neutral-400: hsl(228, 12%, 48%);
+  --clr-neutral-100: hsl(0, 0%, 100%);
+
+  --fw-regular: 500;
+  --fw-bold: 700;
+
+  --ff-base: "Montserrat", sans-serif;
+  --ff-accent: "Fraunces", serif;
+}
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+    2. Remove default margin
+  */
+
+* {
+  margin: 0;
+}
+
+/*
+    3. Allow percentage-based heights in the application
+  */
+
+html,
+body {
+  height: 100%;
+}
+
+/*
+    Typographic tweaks!
+    4. Add accessible line-height
+    5. Improve text rendering
+  */
+
+body {
+  /* change line-height depending on the current project */
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+    6. Improve media defaults
+  */
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+    7. Remove built-in form typography styles
+  */
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+    8. Avoid text overflows
+  */
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* bigger font sizes should have lower line height */
+
+h1,
+h2,
+h3 {
+  line-height: 1;
+}
+
+/* general styling */
+
+body {
+  font-family: var(--ff-base);
+  font-weight: var(--fw-regular);
+  font-size: 0.875rem;
+  color: var(--clr-neutral-400);
+  background-color: var(--clr-secondary-200);
+
+  display: grid;
+  place-content: center;
+
+  margin: 1rem;
+}
+
+/* utilities */
+
+.flex-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* button */
+
+.button {
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+
+  border: 0;
+  border-radius: 0.5rem;
+  padding: 0.75em 1.5em;
+  background-color: var(--clr-primary-400);
+  color: var(--clr-neutral-100);
+  font-weight: var(--fw-bold);
+  font-size: 0.925rem;
+}
+
+.button[data-icon="shopping-cart"]::before {
+  content: "";
+  background-image: url("images/icon-cart.svg");
+  width: 15px;
+  height: 16px;
+}
+
+.button:is(:hover, :focus) {
+  background-color: var(--clr-primary-500);
+}
+
+.visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* product styles */
+
+.product {
+  --content-padding: 1.5rem;
+  --content-spacing: 1rem;
+
+  display: grid;
+  background-color: var(--clr-neutral-100);
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  max-width: 600px;
+}
+
+@media (min-width: 600px) {
+  .product {
+    --content-padding: 2rem;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.product__content {
+  display: grid;
+  gap: var(--content-spacing);
+  padding: var(--content-padding);
+}
+
+.product__category {
+  font-size: 0.8125rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+
+.product__title {
+  font-size: 2rem;
+  font-family: var(--ff-accent);
+  color: var(--clr-neutral-900);
+}
+
+.product__price {
+  font-size: 2rem;
+  font-family: var(--ff-accent);
+  color: var(--clr-primary-400);
+}
+
+/* 
+    Zawsze zaczynaj od resetu stylów.
+    - Josh Como's reset - https://www.joshwcomeau.com/css/custom-css-reset/
+    - Andy Bells reset
+
+    -clr-primary-400 -> 400 bo to jest nasza baza, default.
+    Wyższa numeracja wskazuje na ciemniejszy kolor a niższa na jaśniejszy.
+    Zupełnie jak w font, gdzie jest light, regular i bold, itp.
+    Jest np. taki rozstzrał między 400 a 900, żeby w późniejszym
+    czasie jeśli dojdzie jakiś kolor żeby było dla niego miejsce.
+
+    Always start with general styling.
+
+    Always use rem for font sizes.
+
+    flex-wrap - jeśli jakiś element w flex.group będzie za duży
+    to dzięki temu może zjechać na dół nie powodując overflow.
+
+    Don't use rem as base 10 trick.
+
+    letter-spacing: 5px; - we can use em's so the size will
+    change if the font-size of the parent element will change
+    but it's a small number so we can leave it as it is.
+
+    nice to know - locally scope custom property
+    it's only available for elements inside product
+    it's best for more general styling stuff
+
+    .product {
+        --content-padding: 1.5rem;
+        --content-spacing: 1rem;
+    }
+
+    .product__content {
+        gap: var(--content-spacing);
+        padding: var(--content-padding);
+    }
+
+    align-items w flex-group - nie zawsze powinien się tam
+    znaleźć ale na ten moment może być, czasem jak wiele
+    elementów wymaga align-items to można go tam włożyć
+
+    Kevin Powell would not use this in a normal project
+    Use min-height: 100vh; - if the code is not working 
+    
+    body {
+        display: grid;
+        place-content: center;
+    }
+
+    Klasa .visually-hidden ukrywa elementy w layaucie
+    ale jednocześnie są one dostępne dla użytkowników,
+    którzy używają narzędzia screen reader. 
+    .visually-hidden jest też nazywane .sr-only.
+
+    Always use REM for font-size to be consistent. Because of the inheritable,
+    em unit will be helpful for padding and *margin. By using em, we can make
+    the padding and margin scale proportionately
+
+    flex and inline-flex both apply flex layout to children of the container.
+    Container with display:flex behaves like a block-level element itself,
+    while display:inline-flex makes the container behaves like an inline element.
+
+    Both :where() and :is() can be used to select multiple elements.
+    The difference is the spécifity of the selector, where() will easily be override,
+    be discret while is() do increase the specifity.
+
+    Często przy używaniu pseudoklas musimy dodatkowo używać position albo display,
+    żeby element został wyrenderowany. W tym przypadku shopping-cart jest elementem
+    flex (parent), więc nie trzeba.
+
+    ctrl + shift + g -> source control for github
+
+    1. Initialize repository.
+    2. Wpisz w komunikat initial commit i zatwierdź - normalnie pierwszy commit nie zawiera nic,
+    ale w tym przypadku mamy już gotowy produkt, więc tak wyszło.
+    3. Następnie publikuj
+*/
